@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>員工登入頁</title>
+  <link rel="stylesheet" href="style.css?v=20250328" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#ffffff" />
+</head>
+<body>
+  <h1>歡迎登入</h1>
+  <form id="loginForm">
+    <input type="text" id="name" placeholder="姓名" required />
+    <input type="text" id="id" placeholder="身分證字號" required />
+    <button type="submit">登入</button>
+  </form>
+
+  <div style="margin-top: 20px;">
+    <button onclick="location.href='register.html'">新人資料登錄</button>
+  </div>
+
+  <script src="app.js?v=20250328"></script>
+</body>
+</html>

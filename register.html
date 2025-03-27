@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>新人資料登錄</title>
+  <link rel="stylesheet" href="style.css?v=20250328" />
+</head>
+<body>
+  <h1>新人資料登錄</h1>
+  <form id="registerForm">
+    <input type="text" name="name" placeholder="姓名" required />
+    <input type="text" name="id" placeholder="身分證字號" required />
+    <input type="date" name="birth" placeholder="出生日期" required />
+
+    <div>
+      性別：
+      <label><input type="radio" name="gender" value="男" required /> 男</label>
+      <label><input type="radio" name="gender" value="女" required /> 女</label>
+    </div>
+
+    <label><input type="checkbox" name="hasLicense" /> 持有駕照</label>
+
+    <input type="email" name="email" placeholder="電子信箱" />
+    <input type="tel" name="phone" placeholder="聯絡電話" required />
+    <input type="text" name="address" placeholder="聯絡地址" />
+    <input type="text" name="emergencyContact" placeholder="緊急聯絡人" />
+    <input type="text" name="relation" placeholder="關係" />
+    <input type="tel" name="emergencyPhone" placeholder="緊急聯絡人電話" />
+    <input type="date" name="startDate" placeholder="到職日" />
+
+    <button type="submit">送出申請</button>
+  </form>
+
+  <div id="result" style="margin-top: 1em;"></div>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const json = Object.fromEntries(formData.entries());
+      json.hasLicense = formData.get("hasLicense") === "on";
+
+      const res = await fetch(
+        "https://script.google.com/macros/s/AKfycbzVBlhYN2n6RNU7YsJflotQ9oR3PL2PGmysUS9ysaEyTXmMcJWP1biv_ikL0rYRCmo/exec",
+        {
+          method: "POST",
+          body: JSON.stringify({ action: "register", data: json }),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+
+      const result = await res.json();
+      document.getElementById("result").innerText = result.message || "已送出";
+    });
+  </script>
+</body>
+</html>

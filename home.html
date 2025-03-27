@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>員工首頁</title>
+  <link rel="stylesheet" href="style.css?v=20250328" />
+</head>
+<body>
+  <h1 id="welcome"></h1>
+
+  <div id="functions"></div>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      window.location.href = "index.html";
+    }
+
+    document.getElementById("welcome").innerText = `👋 ${user.name}，歡迎回來`;
+
+    const area = document.getElementById("functions");
+    const isManager = user.role === "主管" || user.level >= 5;
+
+    const buttons = [
+      { text: "查詢班表", link: "schedule.html" },
+      { text: "我要排休", link: "dayoff.html" },
+      { text: "每日叫貨", link: "order.html" },
+      ...(isManager ? [{ text: "後台管理", link: "admin.html" }] : [])
+    ];
+
+    buttons.forEach(btn => {
+      const b = document.createElement("button");
+      b.innerText = btn.text;
+      b.onclick = () => location.href = btn.link;
+      area.appendChild(b);
+    });
+  </script>
+</body>
+</html>
